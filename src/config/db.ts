@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Setting up the connection to DB
 export default async function connectToDb(){
     try {
 
