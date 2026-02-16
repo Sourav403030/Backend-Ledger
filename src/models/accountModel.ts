@@ -12,8 +12,6 @@ interface accountSchemaInterface{
     currency: string
 }
 
-
-
 const accountSchema = new mongoose.Schema<accountSchemaInterface>({
     user:{
         type: mongoose.Schema.Types.ObjectId,
@@ -22,10 +20,12 @@ const accountSchema = new mongoose.Schema<accountSchemaInterface>({
         index: true,
     },
     status:{
+        type: String,
         enum:{
             values: ["ACTIVE", "FROZEN", "CLOSED"],
-            message: "Status can be either ACTIVE, FROZEN, CLOSED"
-        }
+            message: "Status can be either ACTIVE, FROZEN, CLOSED",
+        },
+        default: Status.active
     },
     currency:{
         type: String,
