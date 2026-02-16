@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { userLoginSchema, userModel, userRegisterSchema } from "../models/userModel";
 import jwt from "jsonwebtoken";
+import sendRegistrationEmail from "../services/emailService";
 
 export async function userRegisterController(req: Request, res: Response){
     const {name, email, password} = req.body
@@ -29,7 +30,7 @@ export async function userRegisterController(req: Request, res: Response){
 
     await newUser.save();
 
-    return res.status(201).json({
+    res.status(201).json({
         message: "User registered successfully",
         user:{
             id: newUser._id,
@@ -37,6 +38,8 @@ export async function userRegisterController(req: Request, res: Response){
             email: newUser.email,
         }
     })
+
+    await sendRegistrationEmail(newUser.email, newUser.name);
 }
 
 export async function userLoginController(req: Request, res: Response){
